@@ -1,6 +1,6 @@
 {
     "name": "@nexjs/wsclient",
-    "version": "1.0.1",
+    "version": "1.0.4",
     "description": "socket.io client side rest and hub protocol",
     "main": "./dist/index.js",
     "scripts": {
