@@ -29,9 +29,9 @@ export class AuthClient<TUser, TToken> extends WSClientBase implements IAuthClie
     //#endregion
 
     //#region [events]
-    public readonly onWSError = new SimpleEventDispatcher<IWSError>();
-    public readonly onAuthenticateChange = new SimpleEventDispatcher<boolean>();
-    public readonly onResponseError = new SimpleEventDispatcher<IRestProtocolResponseError<IAuthResponse>>();
+    public readonly onWSError: SimpleEventDispatcher<IWSError> = new SimpleEventDispatcher<IWSError>();
+    public readonly onAuthenticateChange: SimpleEventDispatcher<boolean> = new SimpleEventDispatcher<boolean>();
+    public readonly onResponseError: SimpleEventDispatcher<IRestProtocolResponseError<IAuthResponse>> = new SimpleEventDispatcher<IRestProtocolResponseError<IAuthResponse>>();
     //#endregion
 
     //#region [ constructor ]
