@@ -2,7 +2,7 @@ import { SimpleEventDispatcher } from 'strongly-typed-events';
 
 import { HubClient } from '../HubClient';
 
-export class HubNotificationCredentials<TCredentials> {
+export class HubEvent {
     //#region [ fields ]
     private _hub: HubClient;
     private _actions: Array<() => void | Promise<void>> = [];
@@ -35,23 +35,23 @@ export class HubNotificationCredentials<TCredentials> {
         });
     }
 
-    on(action: () => void | Promise<void>): HubNotificationCredentials<TCredentials> {
+    on(action: () => void | Promise<void>): HubEvent {
         this._actions.push(action);
         return this;
     }
-    off(): HubNotificationCredentials<TCredentials> {
+    off(): HubEvent {
         this._actions = [];
         return this;
     }
-    subscribe(credentials?: TCredentials) {
-        return this._hub.subscribe(this.service, this.event, credentials);
+    subscribe() {
+        return this._hub.subscribe(this.service, this.event, null);
     }
     unsubscribe() {
         return this._hub.unsubscribe(this.service, this.event);
     }
 
-    sub(credentials?: TCredentials) {
-        return this.subscribe(credentials);
+    sub() {
+        return this.subscribe();
     }
     unsub() {
         return this.unsubscribe();

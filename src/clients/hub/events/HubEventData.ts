@@ -2,7 +2,7 @@ import { SimpleEventDispatcher } from 'strongly-typed-events';
 
 import { HubClient } from '../HubClient';
 
-export class HubNotificationData<TData> {
+export class HubEventData<TData> {
     //#region [ fields ]
     private _hub: HubClient;
     private _actions: Array<(value: TData) => void | Promise<void>> = [];
@@ -35,11 +35,11 @@ export class HubNotificationData<TData> {
         });
     }
 
-    on(action: (value: TData) => void | Promise<void>): HubNotificationData<TData> {
+    on(action: (value: TData) => void | Promise<void>): HubEventData<TData> {
         this._actions.push(action);
         return this;
     }
-    off(): HubNotificationData<TData> {
+    off(): HubEventData<TData> {
         this._actions = [];
         return this;
     }

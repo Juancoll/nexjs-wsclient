@@ -19,13 +19,12 @@ export abstract class WSServiceBase {
     //#endregion
 
     //#region  [ protected ]
-    protected request<T = void>(method: string, data: any, credentials: any, timeout?: number) {
+    protected request<T = void>(method: string, data: any, timeout?: number) {
         return this._rest.requestAsync<T>(
             {
                 service: this.name,
                 method,
                 data,
-                credentials,
             },
             timeout,
         );

@@ -13,10 +13,10 @@ export * from './socket.io/SocketIOWildcardPatcher';
 export * from './socket.io/SocketIOClient';
 
 export * from './clients/hub/HubClient';
-export * from './clients/hub/notifications/HubNotification';
-export * from './clients/hub/notifications/HubNotificationCredentials';
-export * from './clients/hub/notifications/HubNotificationCredentialsData';
-export * from './clients/hub/notifications/HubNotificationData';
+export * from './clients/hub/events/HubEvent';
+export * from './clients/hub/events/HubEventSelector';
+export * from './clients/hub/events/HubEventSelectorData';
+export * from './clients/hub/events/HubEventData';
 export * from './clients/hub/messages/IHubRequest';
 export * from './clients/hub/messages/IHubResponse';
 export * from './clients/hub/types/IHubSubscriptionError';

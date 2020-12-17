@@ -2,7 +2,7 @@ import { SimpleEventDispatcher } from 'strongly-typed-events';
 
 import { HubClient } from '../HubClient';
 
-export class HubNotificationCredentialsData<TCredentials, TData> {
+export class HubEventSelectorData<TValidation, TData> {
     //#region [ fields ]
     private _hub: HubClient;
     private _actions: Array<(value: TData) => void | Promise<void>> = [];
@@ -35,22 +35,22 @@ export class HubNotificationCredentialsData<TCredentials, TData> {
         });
     }
 
-    on(action: (value: TData) => void | Promise<void>): HubNotificationCredentialsData<TCredentials, TData> {
+    on(action: (value: TData) => void | Promise<void>): HubEventSelectorData<TValidation, TData> {
         this._actions.push(action);
         return this;
     }
-    off(): HubNotificationCredentialsData<TCredentials, TData> {
+    off(): HubEventSelectorData<TValidation, TData> {
         this._actions = [];
         return this;
     }
-    subscribe(credentials?: TCredentials) {
+    subscribe(credentials?: TValidation) {
         return this._hub.subscribe(this.service, this.event, credentials);
     }
     unsubscribe() {
         return this._hub.unsubscribe(this.service, this.event);
     }
 
-    sub(credentials?: TCredentials) {
+    sub(credentials?: TValidation) {
         return this.subscribe(credentials);
     }
     unsub() {
