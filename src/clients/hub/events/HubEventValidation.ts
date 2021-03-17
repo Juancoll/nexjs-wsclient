@@ -2,10 +2,10 @@ import { SimpleEventDispatcher } from 'strongly-typed-events';
 
 import { HubClient } from '../HubClient';
 
-export class HubEventSelectorData<TValidation, TData> {
+export class HubEventValidation<TValidator> {
     //#region [ fields ]
     private _hub: HubClient;
-    private _actions: Array<(value: TData) => void | Promise<void>> = [];
+    private _actions: Array<() => void | Promise<void>> = [];
     //#endregion
 
     //#region [ properties ]
@@ -22,7 +22,7 @@ export class HubEventSelectorData<TValidation, TData> {
                 for (const action of this._actions) {
                     if (action) {
                         try {
-                            const result = action(publication.data);
+                            const result = action();
                             if ((result as any).then) {
                                 await result;
                             }
@@ -35,22 +35,22 @@ export class HubEventSelectorData<TValidation, TData> {
         });
     }
 
-    on(action: (value: TData) => void | Promise<void>): HubEventSelectorData<TValidation, TData> {
+    on(action: () => void | Promise<void>): HubEventValidation<TValidator> {
         this._actions.push(action);
         return this;
     }
-    off(): HubEventSelectorData<TValidation, TData> {
+    off(): HubEventValidation<TValidator> {
         this._actions = [];
         return this;
     }
-    subscribe(credentials?: TValidation) {
+    subscribe(credentials: TValidator) {
         return this._hub.subscribe(this.service, this.event, credentials);
     }
     unsubscribe() {
         return this._hub.unsubscribe(this.service, this.event);
     }
 
-    sub(credentials?: TValidation) {
+    sub(credentials: TValidator) {
         return this.subscribe(credentials);
     }
     unsub() {

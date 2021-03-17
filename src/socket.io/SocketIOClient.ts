@@ -1,5 +1,5 @@
 import { SimpleEventDispatcher, SignalDispatcher } from 'strongly-typed-events';
-import * as io from 'socket.io-client';
+import { io, ManagerOptions, Socket, SocketOptions } from 'socket.io-client';
 
 import { IWSBase } from '../base/IWSBase';
 import { IEventData } from '../base/IEventData';
@@ -16,7 +16,7 @@ export class SocketIOClient implements IWSBase {
     //#region [ fields ]
     private _requestDisconnect: boolean = false;
     private _requestQueue: RequestQueue = new RequestQueue();
-    private _socket: SocketIOClient.Socket;
+    private _socket: Socket;
     private _baseUrl: string;
     private _path: string;
     private _nsp: string;
@@ -46,7 +46,9 @@ export class SocketIOClient implements IWSBase {
         this._path = path;
         this._nsp = nsp;
 
-        const options: SocketIOClient.ConnectOpts = { path: this.path };
+        const options: Partial<SocketOptions & ManagerOptions> = {
+            path: this.path,
+        };
         const url = `${baseUrl}${nsp}`;
 
         if (this._socket != null) {

@@ -1,7 +1,7 @@
 {
     "name": "@nexjs/wsclient",
-    "version": "1.6.0",
-    "description": "socket.io client side rest and hub protocol",
+    "version": "2.0.0",
+    "description": "nexjs - socket.io client side rest and hub protocol",
     "main": "./dist/index.js",
     "scripts": {
         "prebuild": "rimraf dist",
@@ -15,15 +15,11 @@
     "license": "ISC",
     "dependencies": {
         "uuid": "^7.0.1",
-        "lodash": "^4.17.15",
-        "moment": "^2.24.0",
-        "socket.io-client": "^2.3.0",
-        "strongly-typed-events": "^1.6.8"
+        "socket.io-client": "^4.0.0",
+        "strongly-typed-events": "^2.1.5"
     },
     "devDependencies": {
         "@types/uuid": "^7.0.0",
-        "@types/lodash": "^4.14.149",
-        "@types/socket.io-client": "^1.4.32",
         "rimraf": "^3.0.1",
         "typescript": "^3.8.3"
     }

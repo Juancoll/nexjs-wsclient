@@ -26,7 +26,7 @@ export class HubSubscriptionCollection {
             throw new Error('[HubSubscriptionCollection] not found');
         }
 
-        this.get(req).credentials = req.credentials;
+        this.get(req).validator = req.validator;
     }
     list(): IHubRequest[] {
         return this._subscriptions;

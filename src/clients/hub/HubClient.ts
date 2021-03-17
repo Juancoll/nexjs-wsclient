@@ -61,7 +61,7 @@ export class HubClient extends WSClientBase {
                 for (const req of requests) {
                     if (req) {
                         try {
-                            await this.subscribe(req.service, req.eventName, req.credentials);
+                            await this.subscribe(req.service, req.eventName, req.validator);
                         } catch (err) {
                             this.onSubscriptionError.dispatch({ request: req, error: err });
                         }
@@ -72,14 +72,14 @@ export class HubClient extends WSClientBase {
             this.api.auth.onAuthenticateChange.sub(handle);
         });
     }
-    async subscribe(service: string, event: string, credentials?: any) {
+    async subscribe(service: string, event: string, validator?: any) {
         if (!this.ws.isConnected) {
             throw new Error('ws is not connected');
         }
         const subRequest = {
             service,
             eventName: event,
-            credentials,
+            validator: validator,
             method: 'subscribe',
         } as IHubRequest;
 

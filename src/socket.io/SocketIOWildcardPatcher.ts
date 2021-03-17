@@ -1,11 +1,11 @@
-import * as io from 'socket.io-client';
+import { io, Socket, Manager } from 'socket.io-client';
 import { IEventData } from '../base/IEventData';
 
 export class SocketIOWildcardPatcher {
-    public static Patch(socket: SocketIOClient.Socket) {
-        const emit = io.Manager.prototype.emit;
+    public static Patch(socket: Socket) {
+        const emit = Manager.prototype.emit;
 
-        function onevent_hook(this: SocketIOClient.Socket, packet: any) {
+        function onevent_hook(this: Socket, packet: any) {
             const args = packet.data || [];
             if (packet.id != null) {
                 args.push((this as any).ack(packet.id));
