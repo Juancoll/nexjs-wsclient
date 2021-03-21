@@ -1,8 +1,7 @@
-import { SimpleEventDispatcher, SignalDispatcher } from 'strongly-typed-events';
+import { SimpleEventDispatcher, SignalDispatcher } from 'strongly-typed-events'
 
-import { IEventError } from './IEventError';
-import { IEventData } from './IEventData';
-import { INestJSWSException } from './INestJSWSException';
+import { IEventError } from './IEventError'
+import { IEventData } from './IEventData'
 
 export interface IWSBase {
     //#region  [ properies ]
@@ -16,24 +15,21 @@ export interface IWSBase {
 
     //#region  [ events ]
     onConnectionChange: SimpleEventDispatcher<boolean>;
-    onReconnecting: SimpleEventDispatcher<number>;
-    onReconnected: SimpleEventDispatcher<number>;
     onDisconnect: SignalDispatcher;
     onSend: SimpleEventDispatcher<IEventData>;
     onReceive: SimpleEventDispatcher<IEventData>;
     onNewSocketInstance: SignalDispatcher;
     onSubscriptionError: SimpleEventDispatcher<IEventError>;
-    onNestJSException: SimpleEventDispatcher<INestJSWSException>;
     //#endregion
 
     //#region  [ methods ]
-    connect(baseUrl: string, path: string, nsp: string): void;
-    connectAsync(baseUrl: string, path: string, nsp: string): Promise<void>;
+    connect( baseUrl: string, path: string, nsp: string ): void;
+    connectAsync( baseUrl: string, path: string, nsp: string ): Promise<void>;
     disconnect(): void;
 
-    on(event: string, action: (data: any) => void): IWSBase;
-    emit(event: string, data?: any): void;
+    on( event: string, action: ( data: any )=> void ): IWSBase;
+    emit( event: string, data?: any ): void;
 
-    requestAsync<T = void>(event: string, data?: any, timeout?: number): Promise<T>;
+    requestAsync<T = void>( event: string, data?: any, timeout?: number ): Promise<T>;
     //#endregion
 }

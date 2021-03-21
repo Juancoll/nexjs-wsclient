@@ -1,5 +1,5 @@
-import { RestClient } from './clients/rest/RestClient';
-import { HubClient } from './clients/hub/HubClient';
+import { RestClient } from './clients/rest/RestClient'
+import { HubClient } from './clients/hub/HubClient'
 
 export abstract class WSServiceBase {
     //#region [ abstract ]
@@ -12,14 +12,14 @@ export abstract class WSServiceBase {
     //#endregion
 
     //#region [ constructor ]
-    constructor(rest: RestClient, hub: HubClient) {
-        this._rest = rest;
-        this._hub = hub;
+    constructor ( rest: RestClient, hub: HubClient ) {
+        this._rest = rest
+        this._hub = hub
     }
     //#endregion
 
     //#region  [ protected ]
-    protected request<T = void>(method: string, data: any, timeout?: number) {
+    protected request<T = void> ( method: string, data: any, timeout?: number ): Promise<T> {
         return this._rest.requestAsync<T>(
             {
                 service: this.name,
@@ -27,7 +27,7 @@ export abstract class WSServiceBase {
                 data,
             },
             timeout,
-        );
+        )
     }
     //#endregion
 }

@@ -1,11 +1,11 @@
-import { SimpleEventDispatcher } from 'strongly-typed-events';
+import { SimpleEventDispatcher } from 'strongly-typed-events'
 
-import { HubClient } from '../HubClient';
+import { HubClient } from '../HubClient'
 
 export class HubEventValidation<TValidator> {
     //#region [ fields ]
     private _hub: HubClient;
-    private _actions: Array<() => void | Promise<void>> = [];
+    private _actions: Array<()=> void | Promise<void>> = [];
     //#endregion
 
     //#region [ properties ]
@@ -13,47 +13,47 @@ export class HubEventValidation<TValidator> {
     public event: string;
     public onError = new SimpleEventDispatcher<Error>();
     //#endregion
-    constructor(hub: HubClient, service: string, event: string) {
-        this._hub = hub;
-        this.service = service;
-        this.event = event;
-        hub.onReceive.sub(async publication => {
-            if (publication.service == service && publication.eventName == event) {
-                for (const action of this._actions) {
-                    if (action) {
+    constructor ( hub: HubClient, service: string, event: string ) {
+        this._hub = hub
+        this.service = service
+        this.event = event
+        hub.onReceive.sub( async publication => {
+            if ( publication.service == service && publication.eventName == event ) {
+                for ( const action of this._actions ) {
+                    if ( action ) {
                         try {
-                            const result = action();
-                            if ((result as any).then) {
-                                await result;
+                            const result = action()
+                            if ( ( result as any ).then ) {
+                                await result
                             }
-                        } catch (err) {
-                            this.onError.dispatch(err);
+                        } catch ( err ) {
+                            this.onError.dispatch( err )
                         }
                     }
                 }
             }
-        });
+        } )
     }
 
-    on(action: () => void | Promise<void>): HubEventValidation<TValidator> {
-        this._actions.push(action);
-        return this;
+    on ( action: ()=> void | Promise<void> ): HubEventValidation<TValidator> {
+        this._actions.push( action )
+        return this
     }
-    off(): HubEventValidation<TValidator> {
-        this._actions = [];
-        return this;
+    off (): HubEventValidation<TValidator> {
+        this._actions = []
+        return this
     }
-    subscribe(credentials: TValidator) {
-        return this._hub.subscribe(this.service, this.event, credentials);
+    subscribe ( credentials: TValidator ): Promise<void> {
+        return this._hub.subscribe( this.service, this.event, credentials )
     }
-    unsubscribe() {
-        return this._hub.unsubscribe(this.service, this.event);
+    unsubscribe (): Promise<void> {
+        return this._hub.unsubscribe( this.service, this.event )
     }
 
-    sub(credentials: TValidator) {
-        return this.subscribe(credentials);
+    sub ( credentials: TValidator ): Promise<void> {
+        return this.subscribe( credentials )
     }
-    unsub() {
-        return this.unsubscribe();
+    unsub (): Promise<void> {
+        return this.unsubscribe()
     }
 }
